@@ -20,10 +20,13 @@ function ChaoticResponse(options) {
         responses = opts.customMode.responses;
     }
 
+    weights = utils.normalizeWeights(weights);
+
     this.middleware = (req, res, next) => {
         const response = utils.randomizeWithWeightResponse(weights, responses);
-        
-        if (Math.floor(response / 500) === 1) {
+
+        res.statusCode = response;
+        if (Math.floor(response / 500) === 1 || Math.floor(response / 400) === 1) {
             utils.setBadResponse(res, response);
         } else if (response === 0) {
             setTimeout(function () { //eslint-disable-line
