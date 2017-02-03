@@ -1,0 +1,32 @@
+{
+  "name": "connect-chaotic-response",
+  "version": "0.0.1",
+  "description": "Chaotic http responses middleware for connect and express",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha tests/*.spec.js",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gregra81/connect-chaotic-response.git"
+  },
+  "keywords": [
+    "connect",
+    "express",
+    "http"
+  ],
+  "author": "Greg Rashkevitch",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/gregra81/connect-chaotic-response/issues"
+  },
+  "homepage": "https://github.com/gregra81/connect-chaotic-response#readme",
+  "devDependencies": {
+    "eslint": "^3.14.1",
+    "expect.js": "^0.3.1",
+    "mocha": "^3.2.0",
+    "node-mocks-http": "^1.5.6",
+    "sinon": "^1.17.7"
+  }
+}
