@@ -1,3 +1,5 @@
+/*eslint no-undef: "off"*/
+
 module.exports = (function () {
     'use strict';
 

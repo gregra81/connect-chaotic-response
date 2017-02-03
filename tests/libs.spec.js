@@ -53,7 +53,7 @@ module.exports = (function () {
 
             it('validateCustomMode should throw on bad inputs', () => {
 
-                expect(utils.validateCustomMode({}, null)).to.equal(false)
+                expect(utils.validateCustomMode({}, null)).to.equal(false);
                 expect(utils.validateCustomMode).withArgs([1, 2], [200]).to.throwException();
                 expect(utils.validateCustomMode).withArgs([1, 2], [100, 200]).to.throwException();
             });
