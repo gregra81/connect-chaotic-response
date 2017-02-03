@@ -1,5 +1,5 @@
-const chaosModes = require('./lib/modes');
-const utils = require('./lib/utils');
+const chaosModes = require('./lib/modes'),
+    utils = require('./lib/utils');
 
 function ChaoticResponse(options) {
 
@@ -22,10 +22,23 @@ function ChaoticResponse(options) {
 
     weights = utils.normalizeWeights(weights);
 
+    this.setMode = (mode) => {
+        utils.validateMode(mode);
+        opts.mode = mode;
+        weights = chaosModes[mode].weights;
+        responses = chaosModes[mode].responses;
+    };
+
+    this.getMode = () => {
+        return {
+            weights: weights,
+            responses: responses
+        };
+    };
+
     this.middleware = (req, res, next) => {
         const response = utils.randomizeWithWeightResponse(weights, responses);
 
-        res.statusCode = response;
         if (Math.floor(response / 500) === 1 || Math.floor(response / 400) === 1) {
             utils.setBadResponse(res, response);
         } else if (response === 0) {
@@ -33,6 +46,9 @@ function ChaoticResponse(options) {
                 next();
             }, opts.timeout);
         } else {
+            if (response !== 1) {
+                res.statusCode = response;
+            }
             next();
         }
     };
