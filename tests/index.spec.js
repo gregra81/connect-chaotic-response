@@ -29,7 +29,6 @@ module.exports = (function () {
 
     describe('Chaos Response', () => {
         it('should be able to run the middleware', () => {
-
             sandbox.stub(utils, 'randomizeWithWeightResponse').returns(200);
             const cp = new ChaoticResponse();
             cp.middleware(mockedRequest, mockedResponse, function (nextResp) {
@@ -39,9 +38,13 @@ module.exports = (function () {
         
         it('should return response after a timeout', (done) => {
             sandbox.stub(utils, 'randomizeWithWeightResponse').returns(0);
-            const cp = new ChaoticResponse({timeout:1000, mode: 'timeout'});
+            const timeout = 500;
+            const cp = new ChaoticResponse({timeout:timeout, mode: 'timeout'});
+            const initTime = new Date().getTime();
             cp.middleware(mockedRequest, mockedResponse, function (nextResp) {
+                const finalTime = new Date().getTime();
                 expect(nextResp).to.be.ok;
+                expect(finalTime - initTime).to.be.greaterThan(timeout-1);
                 done();
             });
         });

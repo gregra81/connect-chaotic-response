@@ -20,11 +20,31 @@ module.exports = (function () {
                 expect(modes.hasOwnProperty('failure')).to.be.ok;
             });
             it('each mode should be a tuple of arrayed weights and responses', () => {
-                const existingModes = ['optimistic', 'pessimistic', 'timeout', 'failure'];
-                existingModes.forEach((val) => {
+                for (const val in modes){
                     expect(modes[val].weights).to.be.an(Array);
                     expect(modes[val].responses).to.be.an(Array);
-                });
+                }
+            });
+
+            it('each mode weights and responses array should not be empty', () => {
+                for (const val in modes){
+                    expect(modes[val].responses.length).to.be.greaterThan(0);
+                    expect(modes[val].weights.length).to.be.greaterThan(0);
+                    expect(modes[val].weights.length).to.be.equal(modes[val].responses.length);
+                }
+            });
+
+            it('each mode weights length should equal responses length', () => {
+                for (const val in modes){
+                    expect(modes[val].weights.length).to.be.equal(modes[val].responses.length);
+                }
+            });
+
+            it('each mode weight should be normalized to 1', () => {
+                expect(modes.optimistic.weights.reduce((a, b) => a + b, 0)).to.equal(1);
+                expect(modes.pessimistic.weights.reduce((a, b) => a + b, 0)).to.equal(1);
+                expect(modes.timeout.weights.reduce((a, b) => a + b, 0)).to.equal(1);
+                expect(modes.failure.weights.reduce((a, b) => a + b, 0)).to.equal(1);
             });
         });
 
