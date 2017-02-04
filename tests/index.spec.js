@@ -35,16 +35,16 @@ module.exports = (function () {
                 expect(nextResp).to.be.ok;
             });
         });
-        
+
         it('should return response after a timeout', (done) => {
             sandbox.stub(utils, 'randomizeWithWeightResponse').returns(0);
             const timeout = 500;
-            const cp = new ChaoticResponse({timeout:timeout, mode: 'timeout'});
+            const cp = new ChaoticResponse({timeout: timeout, mode: 'timeout'});
             const initTime = new Date().getTime();
             cp.middleware(mockedRequest, mockedResponse, function (nextResp) {
                 const finalTime = new Date().getTime();
                 expect(nextResp).to.be.ok;
-                expect(finalTime - initTime).to.be.greaterThan(timeout-1);
+                expect(finalTime - initTime).to.be.greaterThan(timeout - 1);
                 done();
             });
         });
@@ -57,7 +57,7 @@ module.exports = (function () {
             sinon.assert.calledOnce(utils.setBadResponse);
         });
 
-        it('should set a new mode when setMode is called', function(){
+        it('should set a new mode when setMode is called', function () {
             const cp = new ChaoticResponse({mode: 'failure'});
             cp.setMode('timeout');
             const newMode = {
@@ -65,6 +65,17 @@ module.exports = (function () {
                 responses: modes.timeout.responses
             };
             expect(cp.getMode()).to.eql(newMode);
+        });
+
+        it('should set a custom mode', function () {
+            const options = {
+                customMode: {
+                    weights: utils.normalizeWeights([1, 4, 5]),
+                    responses: [201, 409, 0]
+                }
+            };
+            const cp = new ChaoticResponse(options);
+            expect(cp.getMode()).to.eql(options.customMode);
         });
 
     });
