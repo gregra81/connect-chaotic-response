@@ -16,10 +16,15 @@ npm install connect-chaotic-response --save
 
 ```js
 const express = require('connect');
+
+// get the Chaotic response module
 const chaoticResponse = require('connect-chaotic-response');
 const app = connect();
 
+// Create a new chaoticResponse, optionaly with options
 const ChaoticResponse = new chaoticResponse(options);
+
+// wire your app with the Chaoutic middleware
 app.use(ChaoticResponse.middleware);
 
 app.listen(3000);
@@ -36,7 +41,10 @@ Chaotic supports these modes:
 
 To set a specific mode:
 ```js
+// Create a new chaoticResponse, with the 'pessimistic' mode
 const ChaoticResponse = new chaoticResponse({mode: 'pessimistic'});
+
+// wire your app with the Chaoutic middleware
 app.use(ChaoticResponse.middleware);
 ```
 You could also change the mode sometime later in your program by calling `ChaoticResponse.setMode(mode);`.
@@ -50,6 +58,8 @@ The `chaoticResponse` constructor accepts an optional object with these options:
 
 An example of using `customMode` + changing default timeout:
 ```js
+
+// Set a custom mode and a 10 seconds timeout
 const options = {
   customMode: {
     responses: [200, 201, 409, 500, 0],
@@ -57,7 +67,11 @@ const options = {
   },
   timeout: 10000
 };
+
+// Create a new chaoticResponse, with the above options
 const ChaoticResponse = new chaoticResponse(options);
+
+// wire your app with the Chaoutic middleware
 app.use(ChaoticResponse.middleware);
 ```
 
