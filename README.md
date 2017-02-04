@@ -1,5 +1,7 @@
 # Connect Chaotic Response
-Chaotic http responses middleware for connect and express. It enables to plug (configurable) random http errors and timeouts into any node server that uses connect/express (or connect/express like) HTTP server framework.
+> A lightweight connect/express middleware that plugs chaotic http behaviour into your server
+
+Chaotic is intended for anyone who needs to test scenarios where his server might become flaky in the best case, non-responsive in the worst case and anything between. It enables to plug (in a configurable fashion) random http errors and timeouts into any node server that uses connect/express (or connect/express like) HTTP server framework. 
 
 
 By default Chaotic will run in the `optimistic` mode that for 99% of requests to your server, will do nothing special for successfull responses (http 2xx codes) and http 3xx responses. 1% of your server requests will be "hijacked" by the Chaotic middleware and will randomly generate error responses (http 4xx or 5xx codes) or a timed out (succesffull) response. For other, more "interesting" ;) modes, see the [Configuration](#configuration) section.
@@ -17,7 +19,7 @@ const express = require('connect');
 const chaoticResponse = require('connect-chaotic-response');
 const app = connect();
 
-const ChaoticResponse = new chaoticResponse();
+const ChaoticResponse = new chaoticResponse(options);
 app.use(ChaoticResponse.middleware);
 
 app.listen(3000);
@@ -25,10 +27,39 @@ app.listen(3000);
 ```
 
 ## Configuration
- 
+Chaotic supports these modes:
 
-Other supported modes are:
-* `pessimistic` - Will return as is 50% of your server requests, 5% for 
+* `optimistic` - <sub><sup>99% - normal, 0.5% - 401, 0.1% - 429, 0.1% - 500, 0.1% - 503, 0.1% - 504, 0.1% - 7 seconds (by default) timeout</sup></sub>
+* `pessimistic` - <sub><sup>50% - normal, 5% - 401, 5% - 429, 10% - 500, 10% - 503, 10% - 504, 10% - 7 seconds (by default) timeout</sup></sub>
+* `timeout` - <sub><sup>1% - normal, 1% - 401, 6% - 429, 1% - 500, 1% - 503, 10% - 504, 80% - 7 seconds (by default) timeout</sup></sub>
+* `failure` - <sub><sup>1% - normal, 1% - 401, 5% - 429, 40% - 500, 40% - 503, 10% - 504, 3% - 7 seconds (by default) timeout</sup></sub>
+
+To set a specific mode:
+```js
+const ChaoticResponse = new chaoticResponse({mode: 'pessimistic'});
+app.use(ChaoticResponse.middleware);
+```
+You could also change the mode sometime later in your program by calling `ChaoticResponse.setMode(mode);`.
+
+### Options
+The `chaoticResponse` constructor accepts an optional object with these options:
+
+* `mode` - As explained above. Supports optimistic, pessimistic, timeout, failure
+* `timeout` - The timeout in miliseconds for timed out responses
+* `customMode` - Enables to create a personal chaotic mode that consists of any (allowed) http responses and their related weights. `customMode` accepts an object of two arrays: `responses` and `weights` that represent the desired mix of the server's flaky behaviour. For a the full list of allowed http codes see [the responses list](../blob/master/lib/responses.js). If the `customMode` option is provided together with the `mode` option, Chaotic will ignore the `mode` option and use the `customMode` behaviour.
+
+An example of using `customMode` + changing default timeout:
+```js
+const options = {
+  customMode: {
+    responses: [200, 201, 409, 500, 0],
+    weights: [5, 5, 2, 2, 1]
+  },
+  timeout: 10000
+};
+const ChaoticResponse = new chaoticResponse(options);
+app.use(ChaoticResponse.middleware);
+```
 
 ## Contributing
 
