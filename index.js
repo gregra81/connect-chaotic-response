@@ -36,10 +36,16 @@ function ChaoticResponse(options) {
         };
     };
 
+    this.callbackOnError = null;
+
     this.middleware = (req, res, next) => {
         const response = utils.randomizeWithWeightResponse(weights, responses);
 
         if (Math.floor(response / 500) === 1 || Math.floor(response / 400) === 1) {
+            res.statusCode = response;
+            if (this.callbackOnError){
+                this.callbackOnError(res);
+            }
             utils.setBadResponse(res, response);
         } else if (response === 0) {
             setTimeout(function () { //eslint-disable-line

@@ -57,7 +57,7 @@ module.exports = (function () {
             sinon.assert.calledOnce(utils.setBadResponse);
         });
 
-        it('should set a new mode when setMode is called', function () {
+        it('should set a new mode when setMode is called', () => {
             const cp = new ChaoticResponse({mode: 'failure'});
             cp.setMode('timeout');
             const newMode = {
@@ -78,7 +78,10 @@ module.exports = (function () {
             expect(cp.getMode()).to.eql(options.customMode);
         });
 
+        it('should have a callback function for error responses', () => {
+            const cp = new ChaoticResponse({mode: 'failure'});
+            expect(cp.callbackOnError).to.be.ok;
+
+        });
     });
-
-
 }());

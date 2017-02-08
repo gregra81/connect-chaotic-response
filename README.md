@@ -75,6 +75,10 @@ const ChaoticResponse = new chaoticResponse(options);
 app.use(ChaoticResponse.middleware);
 ```
 
+### Callback for error responses
+By default the middleware doesn't call `next()` for an error response and simply returns an error. If you require to
+run a function that is fired whenever an error occurs, you can add you callback function by setting the ChaoticResponse.callbackOnError.
+
 ## Contributing
 
 1. Fork it
