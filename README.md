@@ -34,10 +34,10 @@ app.listen(3000);
 ## Configuration
 Chaotic supports these modes:
 
-* `optimistic` - <sub><sup>99% - normal, 0.5% - 401, 0.1% - 429, 0.1% - 500, 0.1% - 503, 0.1% - 504, 0.1% - 7 seconds (by default) timeout</sup></sub>
-* `pessimistic` - <sub><sup>50% - normal, 5% - 401, 5% - 429, 10% - 500, 10% - 503, 10% - 504, 10% - 7 seconds (by default) timeout</sup></sub>
-* `timeout` - <sub><sup>1% - normal, 1% - 401, 6% - 429, 1% - 500, 1% - 503, 10% - 504, 80% - 7 seconds (by default) timeout</sup></sub>
-* `failure` - <sub><sup>1% - normal, 1% - 401, 5% - 429, 40% - 500, 40% - 503, 10% - 504, 3% - 7 seconds (by default) timeout</sup></sub>
+* `optimistic` - 99% - normal, 0.5% - 401, 0.1% - 429, 0.1% - 500, 0.1% - 503, 0.1% - 504, 0.1% - 7 seconds (by default) timeout
+* `pessimistic` - 50% - normal, 5% - 401, 5% - 429, 10% - 500, 10% - 503, 10% - 504, 10% - 7 seconds (by default) timeout
+* `timeout` - 1% - normal, 1% - 401, 6% - 429, 1% - 500, 1% - 503, 10% - 504, 80% - 7 seconds (by default) timeout
+* `failure` - 1% - normal, 1% - 401, 5% - 429, 40% - 500, 40% - 503, 10% - 504, 3% - 7 seconds (by default) timeout
 
 To set a specific mode:
 ```js
