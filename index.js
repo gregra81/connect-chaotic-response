@@ -40,15 +40,17 @@ function ChaoticResponse(options) {
 
     this.middleware = (req, res, next) => {
         const response = utils.randomizeWithWeightResponse(weights, responses);
-
+        // measeure time
+        const start = process.hrtime();
         if (Math.floor(response / 500) === 1 || Math.floor(response / 400) === 1) {
             res.statusCode = response;
             if (this.callbackOnError){
-                this.callbackOnError(res);
+                this.callbackOnError(req, res);
             }
             utils.setBadResponse(res, response);
         } else if (response === 0) {
             setTimeout(function () { //eslint-disable-line
+                res.elapsedTime = process.hrtime(start)[0];
                 next();
             }, opts.timeout);
         } else {

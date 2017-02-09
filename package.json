@@ -1,6 +1,6 @@
 {
   "name": "connect-chaotic-response",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Chaotic http responses middleware for connect and express",
   "main": "index.js",
   "scripts": {
