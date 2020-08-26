@@ -1,6 +1,6 @@
 {
   "name": "connect-chaotic-response",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "Chaotic http responses middleware for connect and express",
   "main": "index.js",
   "scripts": {
@@ -35,6 +35,8 @@
     "sinon": "^1.17.7"
   },
   "standard": {
-    "env": [ "mocha" ]
+    "env": [
+      "mocha"
+    ]
   }
 }
