@@ -1,5 +1,3 @@
-/*eslint no-undef: "off"*/
-
 module.exports = (function () {
     'use strict';
 
@@ -14,10 +12,10 @@ module.exports = (function () {
     describe('Libs', () => {
         describe('Modes', () => {
             it('should have proper modes', () => {
-                expect(modes.hasOwnProperty('optimistic')).to.be.ok;
-                expect(modes.hasOwnProperty('pessimistic')).to.be.ok;
-                expect(modes.hasOwnProperty('timeout')).to.be.ok;
-                expect(modes.hasOwnProperty('failure')).to.be.ok;
+                expect(modes['optimistic']).to.be.ok;
+                expect(modes['pessimistic']).to.be.ok;
+                expect(modes['timeout']).to.be.ok;
+                expect(modes['failure']).to.be.ok;
             });
             it('each mode should be a tuple of arrayed weights and responses', () => {
                 for (const val in modes){
@@ -54,7 +52,7 @@ module.exports = (function () {
             });
             it('each response should be an integer between 100 and 600', () => {
                 for (const status in responsesSet) {
-                    if (responsesSet.hasOwnProperty(status)) {
+                    if (responsesSet[status]) {
                         expect(parseInt(status)).to.be.a('number');
                         expect(status).to.be.above(99);
                         expect(status).to.be.below(600);
