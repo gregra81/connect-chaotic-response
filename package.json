@@ -1,6 +1,6 @@
 {
   "name": "connect-chaotic-response",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "Chaotic http responses middleware for connect and express",
   "main": "index.js",
   "scripts": {
@@ -17,15 +17,19 @@
     "http"
   ],
   "author": "Greg Rashkevitch",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/gregra81/connect-chaotic-response/issues"
   },
   "homepage": "https://github.com/gregra81/connect-chaotic-response#readme",
+  "engines": {
+    "node": ">=10.13.0",
+    "npm": ">=6.0.0"
+  },
   "devDependencies": {
     "eslint": "^3.14.1",
     "expect.js": "^0.3.1",
-    "mocha": "^3.2.0",
+    "mocha": "^8.1.2",
     "node-mocks-http": "^1.5.6",
     "sinon": "^1.17.7"
   }
