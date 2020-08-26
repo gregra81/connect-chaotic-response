@@ -17,9 +17,6 @@ coverage
 # nyc test coverage
 .nyc_output
 
-# node-waf configuration
-.lock-wscript
-
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
