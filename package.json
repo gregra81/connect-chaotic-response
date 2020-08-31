@@ -4,9 +4,9 @@
   "description": "Chaotic http responses middleware for connect and express",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tests/*.spec.js",
+    "test": "mocha \"tests/*.spec.js\"",
     "lint": "eslint .",
-    "format": "prettier --check index.js lib/*.js"
+    "format": "prettier --check index.js \"lib/*.js\""
   },
   "repository": {
     "type": "git",
