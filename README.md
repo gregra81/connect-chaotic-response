@@ -4,7 +4,7 @@
 Chaotic is intended for anyone who needs to test scenarios where his server might become flaky in the best case, non-responsive in the worst case and anything between. It enables to plug (in a configurable fashion) random http errors and timeouts into any node server that uses connect/express (or connect/express like) HTTP server framework. 
 
 
-By default Chaotic will run in the `optimistic` mode that for 99% of requests to your server, will do nothing special for successfull responses (http 2xx codes) and http 3xx responses. 1% of your server requests will be "hijacked" by the Chaotic middleware and will randomly generate error responses (http 4xx or 5xx codes) or a timed out (succesffull) response. For other, more "interesting" ;) modes, see the [Configuration](#configuration) section.
+By default Chaotic will run in the `optimistic` mode that for 99% of requests to your server, will do nothing special for successful responses (http 2xx codes) and http 3xx responses. 1% of your server requests will be "hijacked" by the Chaotic middleware and will randomly generate error responses (http 4xx or 5xx codes) or a timed out (successful) response. For other, more "interesting" ;) modes, see the [Configuration](#configuration) section.
 
 ## Installation
 
@@ -18,14 +18,14 @@ npm install connect-chaotic-response --save
 const express = require('connect');
 
 // get the Chaotic response module
-const chaoticResponse = require('connect-chaotic-response');
+const ChaoticResponse = require('connect-chaotic-response');
 const app = connect();
 
 // Create a new chaoticResponse, optionaly with options
-const ChaoticResponse = new chaoticResponse(options);
+const chaoticResponse = new ChaoticResponse(options);
 
 // wire your app with the Chaoutic middleware
-app.use(ChaoticResponse.middleware);
+app.use(chaoticResponse.middleware);
 
 app.listen(3000);
 
@@ -42,10 +42,10 @@ Chaotic supports these modes:
 To set a specific mode:
 ```js
 // Create a new chaoticResponse, with the 'pessimistic' mode
-const ChaoticResponse = new chaoticResponse({mode: 'pessimistic'});
+const chaoticResponse = new ChaoticResponse({mode: 'pessimistic'});
 
 // wire your app with the Chaoutic middleware
-app.use(ChaoticResponse.middleware);
+app.use(chaoticResponse.middleware);
 ```
 You could also change the mode sometime later in your program by calling `ChaoticResponse.setMode(mode);`.
 
@@ -53,7 +53,7 @@ You could also change the mode sometime later in your program by calling `Chaoti
 The `chaoticResponse` constructor accepts an optional object with these options:
 
 * `mode` - As explained above. Supports optimistic, pessimistic, timeout, failure
-* `timeout` - The timeout in miliseconds for timed out responses
+* `timeout` - The timeout in milliseconds for timed out responses
 * `customMode` - Enables to create a personal chaotic mode that consists of any (allowed) http responses and their related weights. `customMode` accepts an object of two arrays: `responses` and `weights` that represent the desired mix of the server's flaky behaviour. For a the full list of allowed http codes see [the responses list](../blob/master/lib/responses.js). If the `customMode` option is provided together with the `mode` option, Chaotic will ignore the `mode` option and use the `customMode` behaviour.
 
 An example of using `customMode` + changing default timeout:
@@ -69,15 +69,15 @@ const options = {
 };
 
 // Create a new chaoticResponse, with the above options
-const ChaoticResponse = new chaoticResponse(options);
+const chaoticResponse = new ChaoticResponse(options);
 
 // wire your app with the Chaoutic middleware
-app.use(ChaoticResponse.middleware);
+app.use(chaoticResponse.middleware);
 ```
 
 ### Callback for error responses
 By default the middleware doesn't call `next()` for an error response and simply returns an error. If you require to
-run a function that is fired whenever an error occurs, you can add you callback function by setting the ChaoticResponse.callbackOnError.
+run a function that is fired whenever an error occurs, you can add you callback function by setting the `ChaoticResponse.callbackOnError`.
 
 ## Contributing
 
