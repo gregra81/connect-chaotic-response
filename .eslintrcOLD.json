@@ -4,6 +4,7 @@
     },
     "env": {
         "commonjs": true,
+        "node": true,
         "es6": true,
         "mocha": true
     },
@@ -14,7 +15,7 @@
     "rules": {
         "indent": [
             "error",
-            4
+            2
         ],
         "linebreak-style": [
             "error",
