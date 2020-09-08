@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "Chaotic http responses middleware for connect and express",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "test": "mocha \"tests/*.spec.js\"",
     "lint": "eslint .",
