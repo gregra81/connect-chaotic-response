@@ -1,7 +1,19 @@
-const chaosModes = require('./lib/modes'),
-  utils = require('./lib/utils');
+import chaosModes from './lib/modes';
+import {
+  normalizeWeights,
+  randomizeWithWeightResponse,
+  setBadResponse,
+  validateCustomMode,
+  validateMode
+} from './lib/utils';
 
-function ChaoticResponse(options) {
+export interface ChaoticOptions {
+  mode?: any,
+  customMode?: any,
+  timeout?: number
+}
+
+export function ChaoticResponse(options: ChaoticOptions = {}): void {
   const defaults = {
     mode: 'optimistic',
     customMode: {},
@@ -9,20 +21,20 @@ function ChaoticResponse(options) {
   };
   const opts = Object.assign({}, defaults, options || {});
 
-  utils.validateMode(opts.mode);
+  validateMode(opts.mode);
 
   let weights = chaosModes[opts.mode].weights,
     responses = chaosModes[opts.mode].responses;
 
-  if (opts.customMode && utils.validateCustomMode(opts.customMode.weights, opts.customMode.responses)) {
+  if (opts.customMode && validateCustomMode(opts.customMode.weights, opts.customMode.responses)) {
     weights = opts.customMode.weights;
     responses = opts.customMode.responses;
   }
 
-  weights = utils.normalizeWeights(weights);
+  weights = normalizeWeights(weights);
 
   this.setMode = (mode) => {
-    utils.validateMode(mode);
+    validateMode(mode);
     opts.mode = mode;
     weights = chaosModes[mode].weights;
     responses = chaosModes[mode].responses;
@@ -38,7 +50,7 @@ function ChaoticResponse(options) {
   this.callbackOnError = null;
 
   this.middleware = (req, res, next) => {
-    const responseCode = utils.randomizeWithWeightResponse(weights, responses);
+    const responseCode = randomizeWithWeightResponse(weights, responses);
     // measure time
     const start = process.hrtime();
     if (Math.floor(responseCode / 500) === 1 || Math.floor(responseCode / 400) === 1) {
@@ -46,7 +58,7 @@ function ChaoticResponse(options) {
       if (this.callbackOnError) {
         this.callbackOnError(req, res);
       }
-      utils.setBadResponse(res, responseCode);
+      setBadResponse(res, responseCode);
     } else if (responseCode === 0) {
       setTimeout(function () {
         //eslint-disable-line
@@ -62,4 +74,3 @@ function ChaoticResponse(options) {
   };
 }
 
-module.exports = ChaoticResponse;

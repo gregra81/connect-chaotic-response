@@ -1,5 +1,5 @@
-const responsesSet = require('./responses');
-const chaosModes = require('./modes');
+import responsesSet from './responses';
+import chaosModes from './modes';
 
 const validateCustomMode = (weights, responses) => {
   if (
@@ -56,7 +56,7 @@ const validateMode = (mode) => {
   return true;
 };
 
-const normalizeWeights = (weights) => {
+const normalizeWeights = (weights: number[]): number[] => {
   // get the sum of all weights
   const weightsSum = weights.reduce((a, b) => a + b, 0);
 
@@ -64,7 +64,7 @@ const normalizeWeights = (weights) => {
   return weights.map((w) => w / weightsSum);
 };
 
-module.exports = {
+export {
   validateCustomMode,
   setBadResponse,
   randomizeWithWeightResponse,

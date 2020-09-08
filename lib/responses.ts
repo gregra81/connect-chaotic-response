@@ -1,4 +1,4 @@
-module.exports = (function () {
+export default (function () {
   return {
     200: 'OK',
     201: 'Created',
