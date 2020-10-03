@@ -22,9 +22,9 @@ declare namespace ChaoticResponse {
   }
 
   type ChaoticOptions = {
-    mode: Modes,
-    customMode: ChaoticResponse.ChaoticModes,
-    timeout: number
+    mode?: Modes,
+    customMode?: ChaoticResponse.ChaoticModes,
+    timeout?: number
   }
 
   enum Modes {
