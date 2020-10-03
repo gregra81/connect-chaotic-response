@@ -3,17 +3,10 @@ import { NextFunction, Request, Response } from 'express';
 
 export = ChaoticResponse;
 
-declare enum Modes {
-  OPTIMISTIC = 'optimistic',
-  PESSIMISTIC = 'pessimistic',
-  TIMEOUT = 'timeout',
-  FAILURE = 'failure'
-}
-
 declare class ChaoticResponse {
   constructor(options?: ChaoticResponse.ChaoticOptions);
 
-  setMode(mode: Modes): void;
+  setMode(mode: ChaoticResponse.Modes): void;
 
   getMode(): ChaoticResponse.ChaoticModes;
 
@@ -32,5 +25,12 @@ declare namespace ChaoticResponse {
     mode: Modes,
     customMode: ChaoticResponse.ChaoticModes,
     timeout: number
+  }
+
+  enum Modes {
+    OPTIMISTIC = 'optimistic',
+    PESSIMISTIC = 'pessimistic',
+    TIMEOUT = 'timeout',
+    FAILURE = 'failure'
   }
 }
