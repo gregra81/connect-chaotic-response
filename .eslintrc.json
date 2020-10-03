@@ -5,7 +5,8 @@
     "env": {
         "commonjs": true,
         "es6": true,
-        "mocha": true
+        "mocha": true,
+        "node": true
     },
     "extends": "eslint:recommended",
     "parserOptions": {
@@ -14,7 +15,7 @@
     "rules": {
         "indent": [
             "error",
-            4
+            2
         ],
         "linebreak-style": [
             "error",
